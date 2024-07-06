@@ -1,13 +1,20 @@
 const express = require('express');
 const Route=express.Router();
 const UserAuthController=require('../controller/UserAuthCtl');
+const OrganisationController=require('../controller/OrganizationClt');
 const errorHandler=require('../service/errorHandling');
 const Auth = require('../middlewares/authMiddleWear');
 
+
 Route.post('/auth/signup',UserAuthController.createUser);//signUp a new user and create a new orgnization along
 Route.post('/auth/login',UserAuthController.loginUser);//loging user
-
 Route.get('/users/:id',Auth.authmiddleware,UserAuthController.getaUserbyId);//get user by id with the accesstoken which returns the user and the user orgnisation
+
+
+Route.post('/organisation',Auth.authmiddleware,OrganisationController.createOrganization);//to create a new orgnization
+Route.post('/organisation/:orgId/users',Auth.authmiddleware,OrganisationController.addAUserToAnOrganization);//to add a user to an organization
+Route.get('/organisation',Auth.authmiddleware,OrganisationController.getUserOrganisations);//to get all the organization a user is in
+Route.get('/organisation/:orgId',Auth.authmiddleware,OrganisationController.getOrganisationsId);//to get a single orgnization by
 
 
 

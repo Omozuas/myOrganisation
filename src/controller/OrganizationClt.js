@@ -62,7 +62,7 @@ class OrganisationController{
   });
     
   static addAUserToAnOrganization=asynchandler(async(req,res)=>{
-        const organization_id  = req.params.id;
+        const organization_id  = req.params.orgId;
         const {userId} = req.body;           
         try {
         
@@ -103,8 +103,8 @@ class OrganisationController{
 
   static getOrganisationsId=asynchandler(async(req,res)=>{
     
-        const organization_id  = req.params.id;  
-        console.log(organization_id)     
+        const organization_id  = req.params.orgId;  
+            
         try {
          
             const organisation = await Organisation.findByPk(organization_id, {include: User});

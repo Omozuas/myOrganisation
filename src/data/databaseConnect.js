@@ -7,7 +7,7 @@
 //     // port:process.env.DB_PORT,
 //     // password:process.env.DB_PASSWORD,
 //     // database:process.env.DB_NAME,
-//     connectionString:"postgresql://hngtask2_user:E5ESxaYlIkCzQlcg8INv8UHCnGt3IBO2@dpg-cq4gosdds78s73cju6kg-a.oregon-postgres.render.com/hngtask2"
+//     connectionString:process.env.DB_URL
 // })
 
 // client.connect()
