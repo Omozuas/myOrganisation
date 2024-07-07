@@ -10,7 +10,6 @@ class errorhandler{
         res.status(statuscode);
         res.json({
             message:err?.message,
-            stack:err?.stack,
             status: "Bad request",
             statuscode:statuscode
         });
