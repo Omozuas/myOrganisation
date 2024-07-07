@@ -18,9 +18,22 @@ app.use(morgan('dev'))
 app.use(bodyPerser.json())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+app.get('/',(req,res)=>{
+    res.send('Hello World')
+})
 app.use('/api',UserAuth);//main user endPoint
 
-
+cron.schedule("*/4 * * * * ", async () => {
+    try {
+      const currentTime = new Date();
+      console.log(`Current time: ${currentTime}`);
+      
+      const response = await axios.get('https://myorganisation.onrender.com');
+      console.log('API Response:', response.data);
+    } catch (error) {
+      console.error('Error fetching API:', error);
+    }
+  });
 
 module.exports = app;
 
