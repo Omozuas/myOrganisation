@@ -1,20 +1,20 @@
-jest.setTimeout(40000);
+jest.setTimeout(30000);
 const request = require('supertest');
-// const server = require('../server');
+const app = require('../server');
 const sequelize = require('../src/config/sequelizeDb');
 const{ User }= require('../src/model/user.model');
 const JWT = require('jsonwebtoken');
 const jwtToken = require('../src/service/jwtToken');
 const bcrypt=require('bcrypt');
-
+let server;
 beforeAll(async () => {
-  let server;
- 
+  
+    server = app.listen(process.env.TEST_PORT, () => {
+      console.log(`Test server is running on ${process.env.TEST_PORT}`);
+    });
+   
     await sequelize.sync({ force: true });
- 
-   server = 'https://myorganisation.onrender.com';
-
-    const response = await request(server)
+    const response = await request(app)
     .post('/api/auth/signup')
     .send({
       firstName: 'John',
@@ -39,7 +39,7 @@ beforeAll(async () => {
     let orgId;
   
     beforeEach(async () => {
-      const response = await request(server)
+      const response = await request(app)
         .post('/api/auth/login')
         .send({
           email: 'john.doe@example.com',
@@ -62,7 +62,7 @@ beforeAll(async () => {
       });
   
     it('should register a new user and create a default organisation', async () => {
-      const response = await request(server)
+      const response = await request(app)
         .post('/api/auth/signup')
         .send({
           firstName: 'Jane',
@@ -77,7 +77,7 @@ beforeAll(async () => {
     });
   
     it('should log the user in successfully', async () => {
-      const response = await request(server)
+      const response = await request(app)
         .post('/api/auth/login')
         .send({
           email: 'john.doe@example.com',
@@ -91,7 +91,7 @@ beforeAll(async () => {
     });
   
     it('should fail if required fields are missing during signup', async () => {
-      const response = await request(server)
+      const response = await request(app)
         .post('/api/auth/signup')
         .send({
           firstName: 'MissingLastName'
@@ -102,7 +102,7 @@ beforeAll(async () => {
     });
   
     it('should fail if there is a duplicate email during signup', async () => {
-      const response = await request(server)
+      const response = await request(app)
         .post('/api/auth/signup')
         .send({
           firstName: 'John',
@@ -118,7 +118,7 @@ beforeAll(async () => {
     });
   
     it('should get user organisations', async () => {
-      const response = await request(server)
+      const response = await request(app)
         .get(`/api/users/${userId}`)
         .set('Authorization', `Bearer ${token}`);
       
@@ -129,7 +129,7 @@ beforeAll(async () => {
     });
   
     it('should create a new organisation', async () => {
-      const response = await request(server)
+      const response = await request(app)
         .post('/api/organisation')
         .send({
           name: 'New Organisation',
@@ -146,7 +146,7 @@ beforeAll(async () => {
     });
   
     it('should add a user to an organisation', async () => {
-      const response2 = await request(server)
+      const response2 = await request(app)
     .post('/api/auth/signup')
     .send({
         firstName: 'Jane',
@@ -156,7 +156,7 @@ beforeAll(async () => {
         phone: '0987654321',
     });
   
-      const response = await request(server)
+      const response = await request(app)
         .post(`/api/organisation/${orgId}/users`)
         .set('Authorization', `Bearer ${token}`)
         .send({ userId: response2.body.data.userId });
@@ -169,7 +169,7 @@ beforeAll(async () => {
     });
   
     it('should fail if organisation is not found', async () => {
-      const response = await request(server)
+      const response = await request(app)
         .get('/api/organisation/99')
         .set('Authorization', `Bearer ${token}`);
       
@@ -190,7 +190,7 @@ beforeAll(async () => {
 
     const newToken = JWT.sign({ id: newUser.userId }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
-    const response = await request(server)
+    const response = await request(app)
       .get('/api/organisation')
       .set('Authorization', `Bearer ${newToken}`);
     expect(response.statusCode).toBe(422); 
@@ -199,6 +199,6 @@ beforeAll(async () => {
   });
   afterAll(async () => {
     await sequelize.close();
-    // server.close(); 
+   server.close();
   });
   });

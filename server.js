@@ -4,6 +4,7 @@ const dotenv = require('dotenv').config()
 const cors =require('cors');
 const cron = require("node-cron");
 const axios=require('axios');
+
 // const dbConnect =require('./src/data/databaseConnect');
 const morgan=require('morgan');
 const UserAuth =require('./src/routes/UserAuthRoute')
@@ -24,21 +25,15 @@ app.get('/',(req,res)=>{
 })
 app.use('/api',UserAuth);//main user endPoint
 
-cron.schedule("*/4 * * * * ", async () => {
-    try {
-      const currentTime = new Date();
-      console.log(`Current time: ${currentTime}`);
-      
-      const response = await axios.get('https://myorganisation.onrender.com');
-      console.log('API Response:', response.data);
-    } catch (error) {
-      console.error('Error fetching API:', error);
-    }
-  });
+
 
 module.exports = app;
 
 if (require.main === module) {
+    cron.schedule("*/5 * * * * ", async () => {
+    const response = await axios.get('https://myorganisation.onrender.com');
+    console.log(response.data);
+  });
 //start server
 app.listen(process.env.PORT ,()=>{
     console.log(`server is running on ${process.env.PORT}`)
