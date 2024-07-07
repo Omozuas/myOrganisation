@@ -53,7 +53,7 @@ beforeAll(async () => {
       userId = decoded.id; // Extract the userId from the decoded token
     });
 
-    it('should generate a token that expires in 1 day', () => {
+    it('should generate a token that expires in 1 day and have user details', () => {
         const token = jwtToken.generateToken('userId123');
         const decoded = JWT.verify(token, process.env.JWT_SECRET);
         
@@ -195,6 +195,16 @@ beforeAll(async () => {
       .set('Authorization', `Bearer ${newToken}`);
     expect(response.statusCode).toBe(422); 
     expect(response.body.message).toBe('Error');
+  
+  });
+  it('should  allow users to see organisations they  have access to', async () => {
+    
+
+    const response = await request(app)
+      .get('/api/organisation')
+      .set('Authorization', `Bearer ${token}`);
+    expect(response.statusCode).toBe(200); 
+    expect(response.body.message).toBe('Organizations retrived');
   
   });
   afterAll(async () => {
