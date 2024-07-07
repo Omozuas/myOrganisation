@@ -6,7 +6,7 @@ const errorHandler=require('../service/errorHandling');
 const Auth = require('../middlewares/authMiddleWear');
 
 
-Route.post('/auth/signup',UserAuthController.createUser);//signUp a new user and create a new orgnization along
+Route.post('/auth/register',UserAuthController.createUser);//signUp a new user and create a new orgnization along
 Route.post('/auth/login',UserAuthController.loginUser);//loging user
 Route.get('/users/:id',Auth.authmiddleware,UserAuthController.getaUserbyId);//get user by id with the accesstoken which returns the user and the user orgnisation
 
