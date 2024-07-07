@@ -13,6 +13,9 @@ class OrganisationController{
         if (!name) {
             throw new Error( 'Organization name is required' );
           }
+          if (!description) {
+            throw new Error( 'Organization description is required' );
+          }
 
         try {
             const isExisting = await Organisation.findOne({ where: { name } });
@@ -28,7 +31,7 @@ class OrganisationController{
             await userId.addOrganisation(organisation);
             
           
-            return res.status(200).json({data:organisation,message:'Organization created',status: "success"});
+            return res.status(200).json({data:organisation,message:'Organisation created successfully',status: "success"});
         } catch (error) {
             throw new Error( error );
         }
@@ -55,6 +58,10 @@ class OrganisationController{
              
               const organisations = user.Organisations;
             
+              if (organisations.length == 0) {
+               
+                throw new Error('') 
+              }
             return res.status(200).json({data:organisations,message:'Organizations retrived',status: "success"});
         } catch (error) {
             throw new Error( error );

@@ -31,8 +31,4 @@ const User = sequelize.define('User', {
   }, {});
 
 
-
-  sequelize.sync()
-  .then(() => console.log('Database & tables created! users'));
-
   module.exports = { User };

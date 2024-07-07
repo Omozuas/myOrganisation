@@ -1,13 +1,12 @@
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(process.env.DB_URL, {
-    host: process.env.DB_HOST,
     dialect: 'postgres',
     logging:false,
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false // Disable SSL validation if needed
+        rejectUnauthorized: false 
       }
     }
   });
@@ -15,12 +14,7 @@ const sequelize = new Sequelize(process.env.DB_URL, {
   // const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERS, process.env.DB_PASSWORD, {
   //   host: process.env.DB_HOST,
   //   dialect: 'postgres',
-  //   dialectOptions: {
-  //     ssl: {
-  //       require: true,
-  //       rejectUnauthorized: false // Disable SSL validation if needed
-  //     }
-  //   }
+  //   logging:false
   // });
 
   sequelize.authenticate()

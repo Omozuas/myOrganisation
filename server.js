@@ -5,7 +5,6 @@ const cors =require('cors');
 const cron = require("node-cron");
 // const dbConnect =require('./src/data/databaseConnect');
 const morgan=require('morgan');
-const cookieParser = require('cookie-parser');
 const UserAuth =require('./src/routes/UserAuthRoute')
 
 require('./src/model/userOrganization');
@@ -19,13 +18,15 @@ app.use(morgan('dev'))
 app.use(bodyPerser.json())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use(cookieParser())
 app.use('/api',UserAuth);//main user endPoint
 
 
 
+module.exports = app;
 
+if (require.main === module) {
 //start server
 app.listen(process.env.PORT ,()=>{
     console.log(`server is running on ${process.env.PORT}`)
 })
+}

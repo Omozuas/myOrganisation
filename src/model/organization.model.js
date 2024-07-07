@@ -17,6 +17,4 @@ const sequelize = require('../config/sequelizeDb');
     }
   }, {});
 
-  sequelize.sync()
-  .then(() => console.log('Database & tables created! for organization'));
   module.exports = { Organisation };
