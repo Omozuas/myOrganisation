@@ -20,7 +20,7 @@ app.use(morgan('dev'))
 app.use(bodyPerser.json())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use('/hi',(req,res)=>{
+app.get('/',(req,res)=>{
     res.send('Hello World')
 })
 app.use('/api',UserAuth);//main user endPoint
@@ -31,7 +31,7 @@ module.exports = app;
 
 if (require.main === module) {
     cron.schedule("*/5 * * * * ", async () => {
-    const response = await axios.get('https://myorganisation.onrender.com/hi');
+    const response = await axios.get('https://myorganisation.onrender.com');
     console.log(response.data);
   });
 //start server
