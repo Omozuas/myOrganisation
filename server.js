@@ -9,7 +9,7 @@ const axios=require('axios');
 const morgan=require('morgan');
 const UserAuth =require('./routes/UserAuthRoute')
 
-require('./src/model/userOrganization');
+require('./model/userOrganization');
 
 const app=express();
 // dbConnect.getAllUsers();
