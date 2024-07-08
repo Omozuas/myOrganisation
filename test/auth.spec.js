@@ -130,7 +130,7 @@ beforeAll(async () => {
   
     it('should create a new organisation', async () => {
       const response = await request(app)
-        .post('/api/organisation')
+        .post('/api/organisations')
         .send({
           name: 'New Organisation',
           description: 'Description of new organisation'
@@ -157,7 +157,7 @@ beforeAll(async () => {
     });
   
       const response = await request(app)
-        .post(`/api/organisation/${orgId}/users`)
+        .post(`/api/organisations/${orgId}/users`)
         .set('Authorization', `Bearer ${token}`)
         .send({ userId: response2.body.data.userId });
        
@@ -170,7 +170,7 @@ beforeAll(async () => {
   
     it('should fail if organisation is not found', async () => {
       const response = await request(app)
-        .get('/api/organisation/99')
+        .get('/api/organisations/99')
         .set('Authorization', `Bearer ${token}`);
       
       expect(response.statusCode).toBe(422);
@@ -191,7 +191,7 @@ beforeAll(async () => {
     const newToken = JWT.sign({ id: newUser.userId }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
     const response = await request(app)
-      .get('/api/organisation')
+      .get('/api/organisations')
       .set('Authorization', `Bearer ${newToken}`);
     expect(response.statusCode).toBe(422); 
     expect(response.body.message).toBe('Error');
@@ -201,7 +201,7 @@ beforeAll(async () => {
     
 
     const response = await request(app)
-      .get('/api/organisation')
+      .get('/api/organisations')
       .set('Authorization', `Bearer ${token}`);
     expect(response.statusCode).toBe(200); 
     expect(response.body.message).toBe('Organizations retrived');
