@@ -12,7 +12,7 @@ const UserAuth =require('./src/routes/UserAuthRoute')
 require('./src/model/userOrganization');
 
 const app=express();
-// dbConnect.connect();
+// dbConnect.getAllUsers();
 
 //router
 app.use(cors());
@@ -20,7 +20,7 @@ app.use(morgan('dev'))
 app.use(bodyPerser.json())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.get('/',(req,res)=>{
+app.use('/hi',(req,res)=>{
     res.send('Hello World')
 })
 app.use('/api',UserAuth);//main user endPoint
@@ -31,7 +31,7 @@ module.exports = app;
 
 if (require.main === module) {
     cron.schedule("*/5 * * * * ", async () => {
-    const response = await axios.get('https://myorganisation.onrender.com');
+    const response = await axios.get('https://myorganisation.onrender.com/hi');
     console.log(response.data);
   });
 //start server
