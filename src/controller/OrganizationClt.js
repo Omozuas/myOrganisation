@@ -14,7 +14,7 @@ class OrganisationController{
             throw new Error( 'Organization name is required' );
           }
           if (!description) {
-            throw new Error( 'Organization description is required' );
+            throw new Error( 'Organization description is required');
           }
 
         try {
