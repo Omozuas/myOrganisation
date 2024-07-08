@@ -7,7 +7,7 @@ const axios=require('axios');
 
 // const dbConnect =require('./src/data/databaseConnect');
 const morgan=require('morgan');
-const UserAuth =require('./src/routes/UserAuthRoute')
+const UserAuth =require('./routes/UserAuthRoute')
 
 require('./src/model/userOrganization');
 
