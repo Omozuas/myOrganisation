@@ -16,7 +16,24 @@
 
 // }
 
+// user.service.js
+
+// const {User} = require('../model/user.model'); // Adjust path as per your project structure
+
+// async function getAllUsers() {
+//   try {
+//     const users = await User.findAll();
+//     console.log(users)
+//     return users;
+    
+//   } catch (error) {
+//     console.error('Error fetching users:', error);
+//     throw error;
+//   }
+// }
+
+// module.exports = { getAllUsers };
 
 
 
-module.exports= {connect};
+// module.exports= {connect};
