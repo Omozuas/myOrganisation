@@ -11,7 +11,7 @@ class errorhandler{
         res.status(statuscode);
         res.json({
             message:err?.message.replace(/^Error:\s*/, ''),
-            stack:err?.stack,
+            stack:err?.stack.replace(/Error:\s*/g, ''),
             statuscode:statuscode,
             status: "Bad request",
         });
