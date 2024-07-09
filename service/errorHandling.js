@@ -1,3 +1,4 @@
+
 class errorhandler{
     static notfound(req,res,next){
         const error=new Error(`Not Fond: ${req.originalUrl}`);
@@ -5,19 +6,17 @@ class errorhandler{
         next(error);
     }
 
-    static errorHandler(Error,req,res,next){
+    static errorHandler(err,req,res,next){
         const statuscode =res.statusCode==200?422:res.statusCode;
         res.status(statuscode);
-       
         res.json({
-            message:Error?.message,
+            message:err.message.replace(/^Error:\s*/, ''),
+            stack:err?.stack,
+            statuscode:statuscode,
             status: "Bad request",
-            stack:Error?.stack,
-            statuscode:statuscode
         });
         
         
     }
 }
-
 module.exports=errorhandler;
