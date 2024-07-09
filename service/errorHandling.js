@@ -10,7 +10,7 @@ class errorhandler{
         const statuscode =res.statusCode==200?422:res.statusCode;
         res.status(statuscode);
         res.json({
-            message:err.message.replace(/^Error:\s*/, ''),
+            message:err?.message.replace(/^Error:\s*/, ''),
             stack:err?.stack,
             statuscode:statuscode,
             status: "Bad request",
