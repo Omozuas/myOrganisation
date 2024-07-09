@@ -5,13 +5,14 @@ class errorhandler{
         next(error);
     }
 
-    static errorHandler(err,req,res,next){
+    static errorHandler(Error,req,res,next){
         const statuscode =res.statusCode==200?422:res.statusCode;
         res.status(statuscode);
+       
         res.json({
-            message:err?.Error,
+            message:Error?.message,
             status: "Bad request",
-            stack:err?.stack,
+            stack:Error?.stack,
             statuscode:statuscode
         });
         
