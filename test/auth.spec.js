@@ -15,7 +15,7 @@ beforeAll(async () => {
    
     await sequelize.sync({ force: true });
     const response = await request(app)
-    .post('/api/auth/register')
+    .post('/auth/register')
     .send({
       firstName: 'John',
       lastName: 'Doe',
@@ -40,7 +40,7 @@ beforeAll(async () => {
   
     beforeEach(async () => {
       const response = await request(app)
-        .post('/api/auth/login')
+        .post('/auth/login')
         .send({
           email: 'john.doe@example.com',
           password: 'password123',
@@ -63,7 +63,7 @@ beforeAll(async () => {
   
     it('should register a new user and create a default organisation', async () => {
       const response = await request(app)
-        .post('/api/auth/register')
+        .post('/auth/register')
         .send({
           firstName: 'Jane',
           lastName: 'Smith',
@@ -78,7 +78,7 @@ beforeAll(async () => {
   
     it('should log the user in successfully', async () => {
       const response = await request(app)
-        .post('/api/auth/login')
+        .post('/auth/login')
         .send({
           email: 'john.doe@example.com',
           password: 'password123'
@@ -92,7 +92,7 @@ beforeAll(async () => {
   
     it('should fail if required fields are missing during signup', async () => {
       const response = await request(app)
-        .post('/api/auth/register')
+        .post('/auth/register')
         .send({
           firstName: 'MissingLastName'
         });
@@ -103,7 +103,7 @@ beforeAll(async () => {
   
     it('should fail if there is a duplicate email during signup', async () => {
       const response = await request(app)
-        .post('/api/auth/register')
+        .post('/auth/register')
         .send({
           firstName: 'John',
           lastName: 'Doe',
@@ -147,7 +147,7 @@ beforeAll(async () => {
   
     it('should add a user to an organisation', async () => {
       const response2 = await request(app)
-    .post('/api/auth/register')
+    .post('/auth/register')
     .send({
         firstName: 'Jane',
         lastName: 'Smith',
